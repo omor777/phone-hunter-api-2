@@ -16,10 +16,32 @@
   <body>
     <header></header>
     <main class="container mx-auto">
-        <section></section>
-        <section>
-            <div id="phone-container" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
-                <!-- <div class="card card-compact w-96 bg-slate-100 shadow-xl">
+      <!-- search phone -->
+      <section class="my-10 bg-gray-300 p-5 rounded-md">
+        <div>
+          <input
+            id="search-input-field"
+            type="text"
+            placeholder="Search phone..."
+            class="input input-bordered input-error w-full max-w-xs"
+          />
+          <button onclick="handlePhoneSearch()" class="btn btn-error">
+            Search
+          </button>
+        </div>
+      </section>
+      <!-- show loader -->
+      <section id="loader" class="hidden">
+        <div class="my-40 text-center">
+          <span class="loading loading-dots loading-lg"></span>
+        </div>
+      </section>
+      <section>
+        <div
+          id="phone-container"
+          class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4"
+        >
+          <!-- <div class="card card-compact w-96 bg-slate-100 shadow-xl">
                     <figure><img src="https://daisyui.com/images/stock/photo-1606107557195-0e29a4b5b4aa.jpg" alt="Shoes" /></figure>
                     <div class="card-body">
                       <h2 class="card-title">Shoes!</h2>
@@ -29,8 +51,8 @@
                       </div>
                     </div>
                   </div> -->
-            </div>
-        </section>
+        </div>
+      </section>
     </main>
     <script src="./js/app.js"></script>
   </body>
