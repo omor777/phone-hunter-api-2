@@ -19,12 +19,9 @@ const displayPhone = (phones, isShow) => {
     showAllContainer.classList.add("hidden");
   }
 
-
   // show 12 phone first time
   if (!isShow) {
     phones = phones.slice(0, 12);
-  } else {
-    phones = phones;
   }
   phones.forEach((phone) => {
     // console.log(phone);
@@ -36,24 +33,52 @@ const displayPhone = (phones, isShow) => {
       <h2 class="text-2xl font-semibold text-center">${phone.phone_name}</h2>
       <p>If a dog chews shoes whose shoes does he choose?</p>
       <div class="card-actions justify-center">
-        <button class="btn btn-primary">Buy Now</button>
+        <button onclick='showPhoneDetails("${phone.slug}")' class="btn btn-error">Show Details</button>
       </div>
     </div>
   </div>
     `;
     phoneContainer.appendChild(div);
   });
-  showLoader(false);
+  toggleLoadingSpinner(false);
+};
+
+const showPhoneDetails = async (id) => {
+  // get single phone data
+  const res = await fetch(
+    ` https://openapi.programming-hero.com/api/phone/${id}`
+  );
+  const data = await res.json();
+  const phone = data.data;
+
+  console.log(phone);
+
+  const modalContainer = document.getElementById("modal-container");
+  modalContainer.innerHTML = `
+  <img class="block mx-auto" src="${phone?.image}">
+  <h3 class="text-2xl font-semibold">${phone.name}</h3>
+  <p><strong>Storage :</strong> ${phone?.mainFeatures?.storage}</p>
+  <p><strong>Display Size :</strong> ${phone?.mainFeatures?.displaySize}</p>
+  <p><strong>Chipset :</strong> ${phone?.mainFeatures?.chipSet}</p>
+  <p><strong>Memory :</strong> ${phone?.mainFeatures?.memory}</p>
+  <p><strong>Slug :</strong> ${phone?.slug}</p>
+  <p><strong>Release data :</strong> ${phone?.releaseDate}</p>
+  <p><strong>Brand :</strong> ${phone?.brand}</p>
+  <p><strong>GPS :</strong> ${phone?.others?.GPS ?? "No data available"}</p>
+  `;
+
+  // show modal
+  phone_details_modal.showModal();
 };
 
 const handlePhoneSearch = (isShow) => {
-  showLoader(true);
+  toggleLoadingSpinner(true);
   const searchInputField = document.getElementById("search-input-field");
   const searchText = searchInputField.value;
   loadPhoneData(searchText, isShow);
 };
 
-const showLoader = (isLoading) => {
+const toggleLoadingSpinner = (isLoading) => {
   const loader = document.getElementById("loader");
   if (isLoading) {
     loader.classList.remove("hidden");
